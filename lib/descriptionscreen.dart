@@ -1,0 +1,143 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:construction_equipment/model/product.dart';
+import 'package:construction_equipment/model/user.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+
+class DescriptionScreen extends StatefulWidget {
+  final Product product;
+  final User user;
+
+  const DescriptionScreen({Key key, this.product, this.user}) : super(key: key);
+  @override
+  _DescriptionScreenState createState() => _DescriptionScreenState();
+}
+
+class _DescriptionScreenState extends State<DescriptionScreen> {
+  double screenHeight;
+  double screenWidth;
+  double total = 0;
+  int qty = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('HOMEPAGE'),
+        backgroundColor: Color.fromRGBO(191, 30, 46, 50),
+      ),
+      body: Container(
+          padding: const EdgeInsets.all(1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(40, 0, 30, 0),
+                height: screenHeight / 2.5,
+                // width: screenWidth/0.1,
+                child: CachedNetworkImage(
+
+                  height: 180,
+                  width: 240,
+                  imageUrl:
+                      "https://javathree99.com/s269426/constructorequipment/images/product/${widget.product.prid}.jpg",
+                ),
+              ),
+              SizedBox(height: 15),
+              // Text("  ID: "+widget.product.prid, style: TextStyle(fontSize: 18),),
+              // SizedBox(height: 2),
+              Container(
+                // width:300,
+                // color: Colors.red,
+                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                child: Text(
+                  widget.product.prname, style: TextStyle(fontSize: 20, fontWeight:FontWeight.bold))
+                  ),
+              // SizedBox(height: 3),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                child: Text(
+                  "Type: "+widget.product.prtype, style: TextStyle(fontSize: 18))
+                  ),
+              // SizedBox(height: 3),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                child: Text(
+                  "RM "+widget.product.prprice, style: TextStyle(fontSize: 18,color: Colors.red))
+                  ),
+              // SizedBox(height: 3),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                child: Text(
+                  "Details: "+widget.product.description, style: TextStyle(fontSize: 18),)
+                  ),
+              // SizedBox(height: 3),
+              // Container(
+              //   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+              //   child: Text(
+              //     "Stock(s): "+widget.product.prqty, style: TextStyle(fontSize: 18))
+              //     ),
+              // SizedBox(height: 10),
+              Container(
+                  alignment: Alignment.bottomRight,
+                  height: 40,
+                child: ElevatedButton(
+                  onPressed: () => {_addtocart()},
+                  child: Text("+ Cart"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red[900]
+                  ),
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+
+  _addtocart() {
+    
+    http.post(
+        Uri.parse(
+            "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
+        body: {
+          
+          "email": widget.user.user_email,
+          "prid": widget.product.prid,
+          "prprice": widget.product.prprice,
+          "prqty": qty.toString(),
+        }).then((response) {
+      print(response.body);
+      if (response.body == "failed") {
+        Fluttertoast.showToast(
+            msg: "Failed",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        Fluttertoast.showToast(
+            msg: "Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        // _loadCart();
+      }
+        
+    });
+    // print(widget.user.user_email);
+    // print(widget.product.prid);
+    // print(qty);
+  }
+  
+  
+}

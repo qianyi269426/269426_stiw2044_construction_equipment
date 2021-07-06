@@ -2,7 +2,8 @@
     package="com.stiw2044a202.construction_equipment">
    <application
         android:label="construction_equipment"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -37,5 +38,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.google.android.geo.API_KEY"
+              android:value="AIzaSyAJoIcRro63y0w3xYbpYYoKN_FyAZiCWwA"/>
     </application>
 </manifest>

@@ -1,3 +1,4 @@
+import 'package:construction_equipment/model/user.dart';
 import 'package:flutter/material.dart';
 
 import 'mainscreen.dart';
@@ -118,19 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
             "https://javathree99.com/s269426/constructorequipment/php/login_user.php"),
         body: {"email": _email, "password": _password}).then((response) {
       print(response.body);
-      if (response.body == "success") {
-        Fluttertoast.showToast(
-            msg: "Login Successfully!",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Color.fromRGBO(191, 30, 46, 50),
-            textColor: Colors.white,
-            fontSize: 16.0);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (content) => MainScreen()));
-      } else {
-        Fluttertoast.showToast(
+      if (response.body == "failed") {
+       Fluttertoast.showToast(
             msg: "Login Failed",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
@@ -138,6 +128,17 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Color.fromRGBO(191, 30, 46, 50),
             textColor: Colors.white,
             fontSize: 16.0);
+            
+      } else {
+        
+            List userData=response.body.split(",");
+            User user = new User(
+              user_email: _email,
+              username: userData[1],
+              phoneno: userData[3] );
+            
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (content) => MainScreen(user:user)));
       }
     });
   }

@@ -1,0 +1,226 @@
+import 'package:construction_equipment/model/address.dart';
+import 'package:construction_equipment/pickAddress.dart';
+import 'package:construction_equipment/user.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class CheckoutScreen extends StatefulWidget {
+  final User user;
+  final Address address;
+
+  const CheckoutScreen({Key key, this.user, this.address}) : super(key: key);
+
+  @override
+  _CheckoutScreenState createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  double _totalprice;
+  List addresslist = [];
+  double screenHeight;
+  double screenWidth;
+  // String _curtime = "";
+  String _titlecenter = "Loading...";
+  List _cartList = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _loadMyCart();
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('CHECKOUT'),
+          backgroundColor: Color.fromRGBO(191, 30, 46, 50),
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+        children: [
+            if (_cartList.isEmpty)
+              Flexible(child: Center(child: Text(_titlecenter)))
+            else
+              Flexible(child: OrientationBuilder(builder: (context, orientation) {
+                return GridView.count(
+                    crossAxisCount: 1,
+                    childAspectRatio: 3 / 1,
+                    children: List.generate(_cartList.length, (index) {
+                      return Padding(
+                        padding: EdgeInsets.all(1),
+                        child: Container(
+                          height: 100,
+                        width: 310,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (content) =>
+                                        PickAddress(user: widget.user)));
+                            // print(widget.address.name);
+                          },
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Expanded(
+                                    flex: 3,
+                                    child: ListTile(
+                                      title: Text("Delivery Address:"),
+                                      subtitle: RichText(
+                                        text: TextSpan(children: <TextSpan>[
+                                          TextSpan(
+                                              text: widget.address.name +
+                                                  " " +
+                                                  widget.address.phoneno +
+                                                  "\n",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14)),
+                                          TextSpan(children: <TextSpan>[
+                                            TextSpan(
+                                                text: widget
+                                                        .address.detailed_address +
+                                                    " ",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15)),
+                                            TextSpan(
+                                                text: widget.address.area + " ",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15)),
+                                            TextSpan(
+                                                text: widget.address.poscode + " ",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15)),
+                                            TextSpan(
+                                                text: widget.address.state,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15)),
+                                          ])
+                                        ]),
+                                      ),
+                                    ),
+                                  ),
+                                 
+  ), 
+  Container(
+                  height: 100,
+                  width: 310,
+                  // color: Colors.yellow,
+                  child: Card(
+                    // margin: EdgeInsets.all(6),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          TextField(
+                            // keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              labelText: 'Additional message:',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  width: 310,
+                  child: Card(
+                      child: Row(
+                    children: [
+                      // Text("cart details")
+                      TextButton(
+                  onPressed: () {
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(2019, 12, 31, 00, 00),
+                        maxTime: DateTime(2025, 12, 31, 23, 59), onChanged: (date) {
+                      print('change $date in time zone ' +
+                          date.timeZoneOffset.inHours.toString());
+                    }, onConfirm: (date) {
+                      print('confirm $date');
+                    }, locale: LocaleType.en);
+                  },
+                  child: Text(
+                    
+                    'Delivery datetime'+"\n", textAlign: TextAlign.start,
+                    // style: TextStyle(color: Colors.blue),
+                  )),
+                      ],
+                  )),
+                ),
+                Container(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(height: 5),
+                    Divider(
+                      color: Colors.red,
+                      height: 1,
+                      thickness: 10.0,
+                    ),
+                    Text(
+                      "TOTAL RM " ,//+  _totalprice.toStringAsFixed(2),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                        child: Text("PAY"),
+                        onPressed: () {
+                          _pay();
+                        },
+                        style: ElevatedButton.styleFrom(primary: Colors.red[900]))
+                  ],
+                )),
+                              ],
+                              
+                            ),
+                          ),
+                        ),
+                        ),
+                      );
+                    }));
+              })),
+            
+        ],//children
+      ),
+          )),
+        );
+  }
+
+  void _pay() {}
+
+  // void _loadMyCart() {
+  //   _totalprice=0.0;
+  //   http.post(
+  //       Uri.parse(
+  //           "https://javathree99.com/s269426/constructorequipment/php/loadcart.php"),
+  //       body: {"email": widget.user.user_email}).then((response) {
+  //     if (response.body == "nodata") {
+  //       _titlecenter = "Sorry no product";
+  //       return;
+  //     } else {
+  //       setState(() {
+  //         var jsondata = json.decode(response.body);
+  //         _cartList = jsondata["cart"];
+  //         print(_cartList);
+  //         for (int index = 0; index < _cartList.length; index++) {
+  //           _totalprice =
+  //                double.parse(_cartList[index]['total_price'])+_totalprice;
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+}
