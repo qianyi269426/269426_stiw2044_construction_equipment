@@ -1,6 +1,7 @@
 import 'package:construction_equipment/accountscreen.dart';
 import 'package:construction_equipment/addressscreen.dart';
 import 'package:construction_equipment/cartscreen.dart';
+import 'package:construction_equipment/contact.dart';
 import 'package:construction_equipment/descriptionscreen.dart';
 import 'package:construction_equipment/loginscreen.dart';
 import 'package:construction_equipment/model/product.dart';
@@ -88,6 +89,8 @@ class _MainScreenState extends State<MainScreen> {
               title: Text("Contact Us", style: TextStyle(fontSize: 16)),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.push(
+        context, MaterialPageRoute(builder: (content) => Contact( user: widget.user,)));
               },
             ),
             ListTile(
@@ -100,17 +103,20 @@ class _MainScreenState extends State<MainScreen> {
         child: Container(
             child: Column(
           children: [
-            TextFormField(
-              controller: _prnameController,
-              decoration: InputDecoration(
-                hintText: "Search product",
-                suffixIcon: IconButton(
-                  onPressed: () => _searchProduct(_prnameController.text),
-                  icon: Icon(Icons.search),
+            Container(
+              padding: EdgeInsets.fromLTRB(10,5,10,0),
+              child: TextFormField(
+                controller: _prnameController,
+                decoration: InputDecoration(
+                  hintText: "Search product",
+                  suffixIcon: IconButton(
+                    onPressed: () => _searchProduct(_prnameController.text),
+                    icon: Icon(Icons.search),
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(color: Colors.white24)),
                 ),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Colors.white24)),
               ),
             ),
             if (productlist.isEmpty)

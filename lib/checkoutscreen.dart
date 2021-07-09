@@ -49,97 +49,104 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       body: Center(
           child: Column(
         children: [
-           Container(
-                      height: 80,
-                      width: 310,
-                      // color: Colors.yellow,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (content) =>
-                                      PickAddress(user: widget.user)));
-                          // print(widget.address.name);
-                        },
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Expanded(
-                                  flex: 3,
-                                  child: ListTile(
-                                    title: Text(
-                                      "Delivery Address:",
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                    subtitle: RichText(
-                                      text: TextSpan(children: <TextSpan>[
-                                        TextSpan(
-                                            text: widget.address.name +
-                                                " " +
-                                                widget.address.phoneno +
-                                                "\n",
-                                            style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 14)),
-                                        TextSpan(children: <TextSpan>[
-                                          TextSpan(
-                                              text: widget.address
-                                                      .detailed_address +
-                                                  " ",
-                                              style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 14)),
-                                          TextSpan(
-                                              text: widget.address.area + " ",
-                                              style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 14)),
-                                          TextSpan(
-                                              text:
-                                                  widget.address.poscode + " ",
-                                              style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 14)),
-                                          TextSpan(
-                                              text: widget.address.state,
-                                              style: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 14)),
-                                        ])
-                                      ]),
-                                    ),
-                                  ),
+           SingleChildScrollView(
+             child: Column(
+               children: [
+                 Container(
+                            height: 80,
+                            width: 310,
+                            // color: Colors.yellow,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (content) =>
+                                            PickAddress(user: widget.user)));
+                                // print(widget.address.name);
+                              },
+                              child: Card(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Expanded(
+                                        flex: 3,
+                                        child: ListTile(
+                                          title: Text(
+                                            "Delivery Address:",
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                          subtitle: RichText(
+                                            text: TextSpan(children: <TextSpan>[
+                                              TextSpan(
+                                                  text: widget.address.name +
+                                                      " " +
+                                                      widget.address.phoneno +
+                                                      "\n",
+                                                  style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 14)),
+                                              TextSpan(children: <TextSpan>[
+                                                TextSpan(
+                                                    text: widget.address
+                                                            .detailed_address +
+                                                        " ",
+                                                    style: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 14)),
+                                                TextSpan(
+                                                    text: widget.address.area + " ",
+                                                    style: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 14)),
+                                                TextSpan(
+                                                    text:
+                                                        widget.address.poscode + " ",
+                                                    style: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 14)),
+                                                TextSpan(
+                                                    text: widget.address.state,
+                                                    style: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 14)),
+                                              ])
+                                            ]),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+              
           Container(
-            height: 65,
-            width: 304,
-            // color: Colors.yellow,
-            child: Card(
-              margin: EdgeInsets.all(1),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _messageController,
-                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          labelText: 'Additional message:',
-                          labelStyle: TextStyle(fontSize: 14)),
-                    ),
-                  ],
+              height: 70,
+              width: 304,
+              // color: Colors.yellow,
+              child: Card(
+                margin: EdgeInsets.all(3),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _messageController,
+                         keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            labelText: 'Additional message:',
+                            labelStyle: TextStyle(fontSize: 14)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
           ),
+             ],
+             ),
+           ),
           Container(
             height: 45,
             width: 310,
