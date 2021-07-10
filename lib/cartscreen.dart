@@ -50,8 +50,7 @@ class _CartScreenState extends State<CartScreen> {
                       padding: EdgeInsets.all(1),
                       child: Container(
                         child: Card(
-                          child: Row(
-                            children: [
+                          child: Row(children: [
                             Expanded(
                               flex: 3,
                               child: Container(
@@ -119,7 +118,8 @@ class _CartScreenState extends State<CartScreen> {
                               child: Column(
                                 children: [
                                   IconButton(
-                                    icon: Icon(Icons.delete_outline_sharp), color: Colors.red,
+                                    icon: Icon(Icons.delete_outline_sharp),
+                                    color: Colors.red,
                                     onPressed: () {
                                       _deletecart(index);
                                     },
@@ -145,7 +145,7 @@ class _CartScreenState extends State<CartScreen> {
                     thickness: 10.0,
                   ),
                   Text(
-                    "TOTAL RM " +  _totalprice.toStringAsFixed(2),
+                    "TOTAL RM " + _totalprice.toStringAsFixed(2),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   ElevatedButton(
@@ -250,20 +250,21 @@ class _CartScreenState extends State<CartScreen> {
 
   void _checkout() {
     Address address = new Address(
-      name: " ",
-      phoneno: " ",
-      detailed_address: " ",
-      area: " ",
-      poscode: " ",
-      state: " "
-
-    );
+        name: " ",
+        phoneno: " ",
+        detailed_address: " ",
+        area: " ",
+        poscode: " ",
+        state: " ");
     Navigator.push(
-        context, MaterialPageRoute(builder: (content) => CheckoutScreen(user: widget.user, address:address)));
+        context,
+        MaterialPageRoute(
+            builder: (content) =>
+                CheckoutScreen(user: widget.user, address: address)));
   }
 
   void _loadMyCart() {
-    _totalprice=0.0;
+    _totalprice = 0.0;
     http.post(
         Uri.parse(
             "https://javathree99.com/s269426/constructorequipment/php/loadcart.php"),
@@ -278,7 +279,7 @@ class _CartScreenState extends State<CartScreen> {
           print(_cartList);
           for (int index = 0; index < _cartList.length; index++) {
             _totalprice =
-                 double.parse(_cartList[index]['total_price'])+_totalprice;
+                double.parse(_cartList[index]['total_price']) + _totalprice;
           }
         });
       }

@@ -1,5 +1,4 @@
 import 'package:construction_equipment/addaddress.dart';
-// import 'package:construction_equipment/editaddress.dart';
 import 'package:construction_equipment/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -59,8 +58,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       padding: EdgeInsets.all(1),
                       child: Container(
                         child: Card(
-                          child: Column(
-                            children: [
+                          child: Column(children: [
                             Container(
                               child: Expanded(
                                 flex: 3,
@@ -92,14 +90,14 @@ class _AddressScreenState extends State<AddressScreen> {
                                             color: Colors.black, fontSize: 15)),
                                   ])),
                                   trailing: IconButton(
-                                      icon: Icon(Icons.delete_outline), color: Colors.red,
+                                      icon: Icon(Icons.delete_outline),
+                                      color: Colors.red,
                                       onPressed: () {
                                         _deleteDialog(index);
                                       }),
                                 ),
                               ),
                             ),
-                            
                           ]),
                         ),
                       ),
@@ -110,11 +108,6 @@ class _AddressScreenState extends State<AddressScreen> {
       )),
     );
   }
-
-  // void _edit(index) {
-  //   Navigator.push(
-  //       context, MaterialPageRoute(builder: (content) => EditAddress(user: widget.user)));
-  // }
 
   void _addAddress() {
     Navigator.push(context,
@@ -165,7 +158,6 @@ class _AddressScreenState extends State<AddressScreen> {
             ],
           );
         });
-    
   }
 
   void _delete(int index) {
@@ -181,7 +173,6 @@ class _AddressScreenState extends State<AddressScreen> {
           // "quantity": qty.toString(),
         }).then((response) {
       print(response.body);
-      
 
       if (response.body == "failed") {
         Fluttertoast.showToast(

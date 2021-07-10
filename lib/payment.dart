@@ -10,8 +10,8 @@ class Payment extends StatefulWidget {
   final User user;
   final Address address;
   final Pay pay;
-  
-  const Payment({ Key key, this.user, this.address, this.pay }) : super(key: key);
+
+  const Payment({Key key, this.user, this.address, this.pay}) : super(key: key);
 
   @override
   _PaymentState createState() => _PaymentState();
@@ -19,7 +19,7 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   Completer<WebViewController> _controller = Completer<WebViewController>();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,25 +31,29 @@ class _PaymentState extends State<Payment> {
         child: Container(
           child: Column(
             children: [
-              Expanded(child: WebView(
-                initialUrl: 
-                'https://javathree99.com/s269426/constructorequipment/php/generate_bill.php?email='+
-                widget.user.user_email+
-                '&phoneno='+
-                widget.address.phoneno+
-                '&name='+
-                widget.address.name+
-                '&address='+
-                widget.address.detailed_address+" "+widget.address.poscode+" "+widget.address.area+" "+widget.address.state+
-                '&addmessage='+
-                widget.pay.addmessage+
-                // '&delivery_time='+
-                // widget.pay.delivery_time+
-                '&totalprice='+
-                widget.pay.totalprice.toString()
-                ,
+              Expanded(
+                  child: WebView(
+                initialUrl:
+                    'https://javathree99.com/s269426/constructorequipment/php/generate_bill.php?email=' +
+                        widget.user.user_email +
+                        '&phoneno=' +
+                        widget.address.phoneno +
+                        '&name=' +
+                        widget.address.name +
+                        '&address=' +
+                        widget.address.detailed_address +
+                        " " +
+                        widget.address.poscode +
+                        " " +
+                        widget.address.area +
+                        " " +
+                        widget.address.state +
+                        '&addmessage=' +
+                        widget.pay.addmessage +
+                        '&totalprice=' +
+                        widget.pay.totalprice.toString(),
                 javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (WebViewController webViewController){
+                onWebViewCreated: (WebViewController webViewController) {
                   _controller.complete(webViewController);
                 },
               ))

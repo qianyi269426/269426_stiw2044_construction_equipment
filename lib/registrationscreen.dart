@@ -9,7 +9,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordControllera = new TextEditingController();
   TextEditingController _passwordControllerb = new TextEditingController();
@@ -46,23 +45,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                            labelText: 'Email', icon: Icon(Icons.email,color: Colors.red.shade900)),
+                            labelText: 'Email',
+                            icon:
+                                Icon(Icons.email, color: Colors.red.shade900)),
                       ),
                       TextField(
                         controller: _passwordControllera,
                         decoration: InputDecoration(
-                            labelText: 'Password', icon: Icon(Icons.lock,color: Colors.red.shade900)),
+                            labelText: 'Password',
+                            icon: Icon(Icons.lock, color: Colors.red.shade900)),
                         obscureText: true,
                       ),
                       TextField(
                         controller: _passwordControllerb,
                         decoration: InputDecoration(
                             labelText: 'Enter Password Again',
-                            icon: Icon(Icons.lock,color: Colors.red.shade900)),
+                            icon: Icon(Icons.lock, color: Colors.red.shade900)),
                         obscureText: true,
                       ),
                       SizedBox(height: 10),
-                      
                       MaterialButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

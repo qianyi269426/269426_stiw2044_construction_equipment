@@ -38,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Image.asset('assets/images/logo4.png', scale: 1.3)),
               SizedBox(height: 1),
               Card(
-                
                 shadowColor: Colors.red.shade900,
                 margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                 elevation: 10,
@@ -46,24 +45,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 6),
                   child: Column(
                     children: [
-                      
                       TextField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                            labelText: 'Email', icon: Icon(Icons.email,color: Colors.red.shade900)),
+                            labelText: 'Email',
+                            icon:
+                                Icon(Icons.email, color: Colors.red.shade900)),
                       ),
                       TextField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                            labelText: 'Password', icon: Icon(Icons.lock,color: Colors.red.shade900)),
+                            labelText: 'Password',
+                            icon: Icon(Icons.lock, color: Colors.red.shade900)),
                         obscureText: true,
                       ),
                       SizedBox(height: 2),
                       Row(
                         children: [
                           Checkbox(
-                            activeColor: Colors.red.shade900,
+                              activeColor: Colors.red.shade900,
                               value: _rememberMe,
                               onChanged: (bool value) {
                                 _onchange(value);
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: {"email": _email, "password": _password}).then((response) {
       print(response.body);
       if (response.body == "failed") {
-       Fluttertoast.showToast(
+        Fluttertoast.showToast(
             msg: "Login Failed",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
@@ -128,17 +129,13 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Color.fromRGBO(191, 30, 46, 50),
             textColor: Colors.white,
             fontSize: 16.0);
-            
       } else {
-        
-            List userData=response.body.split(",");
-            User user = new User(
-              user_email: _email,
-              username: userData[1],
-              phoneno: userData[3] );
-            
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (content) => MainScreen(user:user)));
+        List userData = response.body.split(",");
+        User user = new User(
+            user_email: _email, username: userData[1], phoneno: userData[3]);
+
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (content) => MainScreen(user: user)));
       }
     });
   }
@@ -164,20 +161,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _useremailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      labelText: 'Email', icon: Icon(Icons.email,color: Colors.red.shade900)),
+                      labelText: 'Email',
+                      icon: Icon(Icons.email, color: Colors.red.shade900)),
                 )
               ],
             ))),
             actions: [
               TextButton(
-                child: Text('Submit', style: TextStyle(color: Colors.red.shade900),),
+                child: Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.red.shade900),
+                ),
                 onPressed: () {
                   _resetPass(_useremailController.text);
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text('Cancel', style: TextStyle(color: Colors.red.shade900)),
+                child: Text('Cancel',
+                    style: TextStyle(color: Colors.red.shade900)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -271,7 +273,6 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Color.fromRGBO(191, 30, 46, 50),
             textColor: Colors.white,
             fontSize: 16.0);
-        
       } else {
         Fluttertoast.showToast(
             msg: "Password Reset Failed",

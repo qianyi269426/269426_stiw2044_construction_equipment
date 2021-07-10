@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 class PickAddress extends StatefulWidget {
   final User user;
   final Address address;
-  
-  const PickAddress({ Key key, this.user, this.address }) : super(key: key);
+
+  const PickAddress({Key key, this.user, this.address}) : super(key: key);
 
   @override
   _PickAddressState createState() => _PickAddressState();
@@ -20,8 +20,8 @@ class _PickAddressState extends State<PickAddress> {
   String _titlecenter = "Loading...";
   double screenHeight;
   double screenWidth;
-  
-@override
+
+  @override
   void initState() {
     super.initState();
     _loadAddress();
@@ -36,7 +36,6 @@ class _PickAddressState extends State<PickAddress> {
       appBar: AppBar(
         title: Text('PICK ADDRESS'),
         backgroundColor: Color.fromRGBO(191, 30, 46, 50),
-        
       ),
       body: Center(
           child: Column(
@@ -53,15 +52,14 @@ class _PickAddressState extends State<PickAddress> {
                       padding: EdgeInsets.all(1),
                       child: Container(
                         child: GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             _pass(index);
                           },
                           child: Card(
-                            child: Column(
-                              children: [
+                            child: Column(children: [
                               Container(
                                 child: Expanded(
-                                  flex: 3, 
+                                  flex: 3,
                                   child: ListTile(
                                     title: Text(addresslist[index]['name'] +
                                         " " +
@@ -74,43 +72,41 @@ class _PickAddressState extends State<PickAddress> {
                                                   ['detailed_address'] +
                                               " ",
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 15)),
-                                      TextSpan(
-                                          text: addresslist[index]['area'] + " ",
-                                          style: TextStyle(
-                                              color: Colors.black, fontSize: 15)),
+                                              color: Colors.black,
+                                              fontSize: 15)),
                                       TextSpan(
                                           text:
-                                              addresslist[index]['poscode'] + " ",
+                                              addresslist[index]['area'] + " ",
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 15)),
+                                              color: Colors.black,
+                                              fontSize: 15)),
+                                      TextSpan(
+                                          text: addresslist[index]['poscode'] +
+                                              " ",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15)),
                                       TextSpan(
                                           text: addresslist[index]['state'],
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 15)),
+                                              color: Colors.black,
+                                              fontSize: 15)),
                                     ])),
-                                    
                                   ),
                                 ),
                               ),
-                              // IconButton(
-                              //     alignment: Alignment.topRight,
-                              //     icon: Icon(Icons.edit_outlined),
-                              //     onPressed: () {
-                              //       _edit();
-                              //     })
                             ]),
                           ),
                         ),
                       ),
                     );
                   }));
-            })
-            ),
+            })),
         ],
       )),
     );
   }
+
   void _loadAddress() {
     http.post(
         Uri.parse(
@@ -131,16 +127,19 @@ class _PickAddressState extends State<PickAddress> {
 
   void _pass(index) {
     Address address = new Address(
-
       name: addresslist[index]['name'],
       phoneno: addresslist[index]['phoneno'],
       detailed_address: addresslist[index]['detailed_address'],
       area: addresslist[index]['area'],
       poscode: addresslist[index]['poscode'],
       state: addresslist[index]['state'],
-      
     );
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (content) => CheckoutScreen(address: address, user: widget.user,)));
+        context,
+        MaterialPageRoute(
+            builder: (content) => CheckoutScreen(
+                  address: address,
+                  user: widget.user,
+                )));
   }
 }

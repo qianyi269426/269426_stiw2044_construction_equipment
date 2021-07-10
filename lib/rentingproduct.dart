@@ -35,12 +35,10 @@ class _RentingProductState extends State<RentingProduct> {
             padding: const EdgeInsets.all(1),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.fromLTRB(40, 0, 30, 0),
                   height: screenHeight / 2.5,
-                  // width: screenWidth/0.1,
                   child: CachedNetworkImage(
                     height: 180,
                     width: 240,
@@ -48,9 +46,6 @@ class _RentingProductState extends State<RentingProduct> {
                         "https://javathree99.com/s269426/constructorequipment/images/product/${widget.product.prid}.jpg",
                   ),
                 ),
-                // SizedBox(height: 15),
-                // Text("  ID: "+widget.product.prid, style: TextStyle(fontSize: 18),),
-                // SizedBox(height: 2),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text(
@@ -58,19 +53,16 @@ class _RentingProductState extends State<RentingProduct> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
-                // SizedBox(height: 3),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text("Type: " + widget.product.prtype,
                       style: TextStyle(fontSize: 18)),
                 ),
-                // SizedBox(height: 3),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text("RM " + widget.product.prprice,
                       style: TextStyle(fontSize: 18, color: Colors.red)),
                 ),
-                // SizedBox(height: 3),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text(
@@ -78,17 +70,12 @@ class _RentingProductState extends State<RentingProduct> {
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-                // SizedBox(height: 3),
-                // Text("  Stock(s): " + widget.product.prqty,
-                //     style: TextStyle(fontSize: 18)),
-                // SizedBox(height: 20),
                 Container(
                   child: Row(
                     children: [
                       Expanded(
                         flex: 1,
                         child: Container(
-                          // color: Colors.yellow,
                           child: IconButton(
                             icon: Icon(Icons.remove_circle_outline),
                             onPressed: () {
@@ -142,40 +129,38 @@ class _RentingProductState extends State<RentingProduct> {
   }
 
   _addtocart() {
-    if(total != 0){
-    http.post(
-        Uri.parse(
-            "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
-        body: {
-          
-          "email": widget.user.user_email,
-          "prid": widget.product.prid,
-          "prprice": total.toString(),
-          "prqty": qty.toString(),
-        }).then((response) {
-      print(response.body);
-      if (response.body == "failed") {
-        Fluttertoast.showToast(
-            msg: "Failed",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      } else {
-        Fluttertoast.showToast(
-            msg: "Success",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        // _loadCart();
-      }
-        
-    });}
+    if (total != 0) {
+      http.post(
+          Uri.parse(
+              "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
+          body: {
+            "email": widget.user.user_email,
+            "prid": widget.product.prid,
+            "prprice": total.toString(),
+            "prqty": qty.toString(),
+          }).then((response) {
+        print(response.body);
+        if (response.body == "failed") {
+          Fluttertoast.showToast(
+              msg: "Failed",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        } else {
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      });
+    }
     // print(widget.user.user_email);
     // print(widget.product.prid);
     // print(qty);
@@ -184,10 +169,9 @@ class _RentingProductState extends State<RentingProduct> {
   void _setday(String s) {
     setState(() {
       if (s == "add") {
-        if(day <= 6){
+        if (day <= 6) {
           day++;
         }
-        
       }
       if (s == "remove") {
         if (day != 0) {

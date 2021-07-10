@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:construction_equipment/model/user.dart';
@@ -29,6 +30,7 @@ class _AccountScreenState extends State<AccountScreen> {
     super.initState();
     _username.text = widget.user.username;
     _phoneno.text = widget.user.phoneno;
+    _post();
   }
 
   @override
@@ -38,7 +40,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('ACCOUNT'),
+        title: Text('MY PROFILE'),
         backgroundColor: Color.fromRGBO(191, 30, 46, 50),
       ),
       body: SingleChildScrollView(
@@ -64,19 +66,15 @@ class _AccountScreenState extends State<AccountScreen> {
                           )),
                     ),
                     SizedBox(height: 5),
-                    // Text(
-                    //   'Click the camera to add photo',
-                    //   style: TextStyle(fontSize: 10),
-                    // ),
-                    SizedBox(height: 10),
-
+                    SizedBox(height: 5),
                     Card(
                       shadowColor: Colors.red.shade900,
+                      margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
                       elevation: 10,
                       child: Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(15, 5, 20, 5),
+                            padding: EdgeInsets.fromLTRB(15, 10, 20, 5),
                             child: Text(
                               'Email: ' + widget.user.user_email,
                               style: TextStyle(fontSize: 16),
@@ -137,7 +135,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 5,),
+                                // SizedBox(height: 5,),
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -154,18 +152,26 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             ),
                           ),
+                          SizedBox(height: 20),
+                          Container(
+                              child: TextButton(
+                                  onPressed: () {
+                                    _done();
+                                  },
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.orange[300])),
+                                  child: Text(
+                                    "Save",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  )))
                         ],
                       ),
                     ),
-
-                    SizedBox(height: 20),
-                    Container(
-                      child: TextButton(
-                          onPressed: () {
-                            _done();
-                          },
-                          child: Text('Done')),
-                    )
                   ],
                 ),
               )
@@ -337,5 +343,38 @@ class _AccountScreenState extends State<AccountScreen> {
       _image = croppedFile;
       setState(() {});
     }
+  }
+
+  Future<void> _post() async {
+    String base64Image = base64Encode(_image.readAsBytesSync());
+    http.post(
+        Uri.parse(
+            "https://javathree99.com/s269426/constructorequipment/php/account.php"),
+        body: {"encoded_string": base64Image}).then((response) {
+      if (response.body == "success") {
+        Fluttertoast.showToast(
+            msg: "Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        setState(() {
+          _image = null;
+        });
+        Navigator.push(
+            context, MaterialPageRoute(builder: (content) => AccountScreen()));
+      } else {
+        Fluttertoast.showToast(
+            msg: "Failed",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    });
   }
 }

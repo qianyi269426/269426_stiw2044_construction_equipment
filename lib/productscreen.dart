@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-class DescriptionScreen extends StatefulWidget {
+class ProductScreen extends StatefulWidget {
   final Product product;
   final User user;
 
-  const DescriptionScreen({Key key, this.product, this.user}) : super(key: key);
+  const ProductScreen({Key key, this.product, this.user}) : super(key: key);
   @override
-  _DescriptionScreenState createState() => _DescriptionScreenState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _DescriptionScreenState extends State<DescriptionScreen> {
+class _ProductScreenState extends State<ProductScreen> {
   double screenHeight;
   double screenWidth;
   double total = 0;
@@ -34,14 +34,11 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
           padding: const EdgeInsets.all(1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 margin: EdgeInsets.fromLTRB(40, 0, 30, 0),
                 height: screenHeight / 2.5,
-                // width: screenWidth/0.1,
                 child: CachedNetworkImage(
-
                   height: 180,
                   width: 240,
                   imageUrl:
@@ -49,49 +46,32 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                 ),
               ),
               SizedBox(height: 15),
-              // Text("  ID: "+widget.product.prid, style: TextStyle(fontSize: 18),),
-              // SizedBox(height: 2),
               Container(
-                // width:300,
-                // color: Colors.red,
-                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-                child: Text(
-                  widget.product.prname, style: TextStyle(fontSize: 20, fontWeight:FontWeight.bold))
-                  ),
-              // SizedBox(height: 3),
+                  padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                  child: Text(widget.product.prname,
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold))),
               Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-                child: Text(
-                  "Type: "+widget.product.prtype, style: TextStyle(fontSize: 18))
-                  ),
-              // SizedBox(height: 3),
+                  padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                  child: Text("Type: " + widget.product.prtype,
+                      style: TextStyle(fontSize: 18))),
               Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-                child: Text(
-                  "RM "+widget.product.prprice, style: TextStyle(fontSize: 18,color: Colors.red))
-                  ),
-              // SizedBox(height: 3),
+                  padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                  child: Text("RM " + widget.product.prprice,
+                      style: TextStyle(fontSize: 18, color: Colors.red))),
               Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-                child: Text(
-                  "Details: "+widget.product.description, style: TextStyle(fontSize: 18),)
-                  ),
-              // SizedBox(height: 3),
-              // Container(
-              //   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
-              //   child: Text(
-              //     "Stock(s): "+widget.product.prqty, style: TextStyle(fontSize: 18))
-              //     ),
-              // SizedBox(height: 10),
+                  padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
+                  child: Text(
+                    "Details: " + widget.product.description,
+                    style: TextStyle(fontSize: 18),
+                  )),
               Container(
-                  alignment: Alignment.bottomRight,
-                  height: 40,
+                alignment: Alignment.bottomRight,
+                height: 40,
                 child: ElevatedButton(
                   onPressed: () => {_addtocart()},
                   child: Text("+ Cart"),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red[900]
-                  ),
+                  style: ElevatedButton.styleFrom(primary: Colors.red[900]),
                 ),
               ),
             ],
@@ -100,12 +80,10 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   }
 
   _addtocart() {
-    
     http.post(
         Uri.parse(
             "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
         body: {
-          
           "email": widget.user.user_email,
           "prid": widget.product.prid,
           "prprice": widget.product.prprice,
@@ -132,12 +110,9 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
             fontSize: 16.0);
         // _loadCart();
       }
-        
     });
     // print(widget.user.user_email);
     // print(widget.product.prid);
     // print(qty);
   }
-  
-  
 }

@@ -1,8 +1,8 @@
 import 'package:construction_equipment/accountscreen.dart';
 import 'package:construction_equipment/addressscreen.dart';
 import 'package:construction_equipment/cartscreen.dart';
-import 'package:construction_equipment/contact.dart';
-import 'package:construction_equipment/descriptionscreen.dart';
+import 'package:construction_equipment/contactscreen.dart';
+import 'package:construction_equipment/productscreen.dart';
 import 'package:construction_equipment/loginscreen.dart';
 import 'package:construction_equipment/model/product.dart';
 import 'package:construction_equipment/rentingproduct.dart';
@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
-// import 'package:fluttertoast/fluttertoast.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
@@ -52,12 +51,6 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () {
                 _category(context);
               }),
-          // IconButton(
-          //     icon: Icon(Icons.shopping_cart_outlined),
-          //     onPressed: () {
-          //       //print(widget.user.user_email);
-          //       _cart(context);
-          //     }),
         ],
       ),
       drawer: Drawer(
@@ -69,11 +62,14 @@ class _MainScreenState extends State<MainScreen> {
               decoration: BoxDecoration(color: Colors.red.shade900),
             ),
             ListTile(
-              title: Text("My Account", style: TextStyle(fontSize: 16)),
+              title: Text("My Profile", style: TextStyle(fontSize: 16)),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-        context, MaterialPageRoute(builder: (content) => AccountScreen(user: widget.user)));
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) =>
+                            AccountScreen(user: widget.user)));
               },
             ),
             ListTile(
@@ -81,8 +77,10 @@ class _MainScreenState extends State<MainScreen> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-        context, MaterialPageRoute(builder: (content) => AddressScreen(user: widget.user)));
-              
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) =>
+                            AddressScreen(user: widget.user)));
               },
             ),
             ListTile(
@@ -90,7 +88,11 @@ class _MainScreenState extends State<MainScreen> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-        context, MaterialPageRoute(builder: (content) => Contact( user: widget.user,)));
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) => ContactScreen(
+                              user: widget.user,
+                            )));
               },
             ),
             ListTile(
@@ -104,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
             child: Column(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(10,5,10,0),
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
               child: TextFormField(
                 controller: _prnameController,
                 decoration: InputDecoration(
@@ -150,14 +152,6 @@ class _MainScreenState extends State<MainScreen> {
                                           ),
                                         ),
                                         SizedBox(height: 8),
-                                        /*Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                            child: Text(
-                                                "ID: " +
-                                                    productlist[index]['prid'],
-                                                style: TextStyle(fontSize: 16))),
-                                        SizedBox(height: 2),*/
                                         Padding(
                                             padding: EdgeInsets.fromLTRB(
                                                 10, 0, 0, 0),
@@ -192,24 +186,6 @@ class _MainScreenState extends State<MainScreen> {
                                                     fontSize: 15,
                                                     color:
                                                         Colors.red.shade900))),
-                                        // SizedBox(height: 2),
-                                        /*Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                10, 0, 0, 0),
-                                            child: Text(
-                                                "Stock(s): " +
-                                                    productlist[index]['prqty'],
-                                                style:
-                                                    TextStyle(fontSize: 14))),
-                                        SizedBox(height: 5),*/
-                                        /*Container(
-                                           alignment: Alignment.center,
-                                           height: 25,
-                                          child: ElevatedButton(
-                                            onPressed: () => {_addtocart(index)},
-                                            child: Text("+ Cart"),
-                                          ),
-                                        ),*/
                                       ],
                                     )),
                                   )),
@@ -220,10 +196,9 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.shopping_cart),
-        backgroundColor: Colors.red[900],
-        onPressed: _cart
-        ),
+          child: Icon(Icons.shopping_cart),
+          backgroundColor: Colors.red[900],
+          onPressed: _cart),
     );
   }
 
@@ -341,7 +316,10 @@ class _MainScreenState extends State<MainScreen> {
                   )),
               actions: [
                 TextButton(
-                  child: (Text('OK', style: TextStyle(fontSize: 14),)),
+                  child: (Text(
+                    'OK',
+                    style: TextStyle(fontSize: 14),
+                  )),
                   onPressed: () {
                     _ok(sortButton);
                     Navigator.of(context).pop();
@@ -384,63 +362,8 @@ class _MainScreenState extends State<MainScreen> {
 
   void _cancel(int sortButton) {}
 
-  // void _cart() {
-  //   Navigator.push(
-  //       context, MaterialPageRoute(builder: (content) => CartScreen(user: widget.user)));
-  // }
-
-  /*_addtocart(int index) async {
-    if (email == '') {
-      _loademaildialog();
-    } else {
-      await Future.delayed(Duration(seconds: 1));
-      String prid = productlist[index]['productId'];
-      http.post(
-          Uri.parse(
-              "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
-          body: {"email": email, "prid": prid}).then((response) {
-        print(response.body);
-        if (response.body == "failed") {
-          Fluttertoast.showToast(
-              msg: "Failed",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
-        } else {
-          Fluttertoast.showToast(
-              msg: "Success",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
-          _loadCart();
-        }
-      });
-    }
-  }*/
-
-  /*void _loademaildialog() {}
-
-  void _loadCart() {
-    http.post(
-        Uri.parse(
-            "https://javathree99.com/s269426/constructorequipment/php/loadcartitem.php"),
-        body: {"email": email}).then((response) {
-      setState(() {
-        cartitem = int.parse(response.body);
-        print(cartitem);
-      });
-    });
-  }*/
-
   void _descrip(index) {
     Product product = new Product(
-
       prid: productlist[index]['prid'],
       prname: productlist[index]['prname'],
       prtype: productlist[index]['prtype'],
@@ -448,22 +371,31 @@ class _MainScreenState extends State<MainScreen> {
       description: productlist[index]['description'],
       prqty: productlist[index]['prqty'],
     );
-    if(productlist[index]['prtype'] == 'Product'){
+    if (productlist[index]['prtype'] == 'Product') {
       Navigator.push(
-        context, MaterialPageRoute(builder: (content) => DescriptionScreen(product:product, user: widget.user,)));
-    }
-    else if(productlist[index]['prtype'] == 'Renting'){
+          context,
+          MaterialPageRoute(
+              builder: (content) => ProductScreen(
+                    product: product,
+                    user: widget.user,
+                  )));
+    } else if (productlist[index]['prtype'] == 'Renting') {
       Navigator.push(
-        context, MaterialPageRoute(builder: (content) => RentingProduct(product:product, user: widget.user)));
-    }
-    else if(productlist[index]['prtype'] == 'Services'){
+          context,
+          MaterialPageRoute(
+              builder: (content) =>
+                  RentingProduct(product: product, user: widget.user)));
+    } else if (productlist[index]['prtype'] == 'Services') {
       Navigator.push(
-        context, MaterialPageRoute(builder: (content) => ServicesProduct(product:product, user: widget.user)));
+          context,
+          MaterialPageRoute(
+              builder: (content) =>
+                  ServicesProduct(product: product, user: widget.user)));
     }
   }
 
   _cart() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (content) => CartScreen(user: widget.user)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (content) => CartScreen(user: widget.user)));
   }
 }

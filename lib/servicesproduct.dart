@@ -36,12 +36,10 @@ class _ServicesProductState extends State<ServicesProduct> {
             padding: const EdgeInsets.all(1),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.fromLTRB(40, 0, 30, 0),
                   height: screenHeight / 2.5,
-                  // width: screenWidth/0.1,
                   child: CachedNetworkImage(
                     height: 180,
                     width: 240,
@@ -49,9 +47,6 @@ class _ServicesProductState extends State<ServicesProduct> {
                         "https://javathree99.com/s269426/constructorequipment/images/product/${widget.product.prid}.jpg",
                   ),
                 ),
-                // SizedBox(height: 15),
-                //  Text("  ID: "+widget.product.prid, style: TextStyle(fontSize: 18),),
-                // SizedBox(height: 2),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text(
@@ -59,19 +54,16 @@ class _ServicesProductState extends State<ServicesProduct> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
-                // SizedBox(height: 3),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text("Type: " + widget.product.prtype,
                       style: TextStyle(fontSize: 18)),
                 ),
-                // SizedBox(height: 3),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text("RM " + widget.product.prprice,
                       style: TextStyle(fontSize: 18, color: Colors.red)),
                 ),
-                // SizedBox(height: 3),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                   child: Text(
@@ -79,10 +71,6 @@ class _ServicesProductState extends State<ServicesProduct> {
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-                // SizedBox(height: 3),
-                // Text("  Stock(s): " + widget.product.prqty,
-                //     style: TextStyle(fontSize: 18)),
-                // SizedBox(height: 3),
                 Container(
                   child: Row(children: [
                     Container(
@@ -93,7 +81,6 @@ class _ServicesProductState extends State<ServicesProduct> {
                         controller: _feetController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          // labelText: 'Email', icon: Icon(Icons.email,color: Colors.red.shade900)
                           hintText: "feet",
                         ),
                       ),
@@ -103,16 +90,17 @@ class _ServicesProductState extends State<ServicesProduct> {
                       child: Text("Calculate"),
                       style: ElevatedButton.styleFrom(primary: Colors.red[900]),
                     ),
-                     Expanded(
-                       flex: 3,
-                       child: Container(
-                         child: Text(
-                           "RM " + total.toStringAsFixed(2),textAlign: TextAlign.right,style: TextStyle(fontSize: 22),)),
-                     )
-                  ]
-                  ),
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                          child: Text(
+                        "RM " + total.toStringAsFixed(2),
+                        textAlign: TextAlign.right,
+                        style: TextStyle(fontSize: 22),
+                      )),
+                    )
+                  ]),
                 ),
-
                 Container(
                   alignment: Alignment.bottomRight,
                   height: 40,
@@ -129,64 +117,47 @@ class _ServicesProductState extends State<ServicesProduct> {
   }
 
   _addtocart() {
-    if(total != 0){
-    http.post(
-        Uri.parse(
-            "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
-        body: {
-          
-          "email": widget.user.user_email,
-          "prid": widget.product.prid,
-          "prprice": total.toString(),
-          "prqty": qty.toString(),
-        }).then((response) {
-      print(response.body);
-      if (response.body == "failed") {
-        Fluttertoast.showToast(
-            msg: "Failed",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      } else {
-        Fluttertoast.showToast(
-            msg: "Success",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        // _loadCart();
-      }
-        
-    });}
+    if (total != 0) {
+      http.post(
+          Uri.parse(
+              "https://javathree99.com/s269426/constructorequipment/php/insertcart.php"),
+          body: {
+            "email": widget.user.user_email,
+            "prid": widget.product.prid,
+            "prprice": total.toString(),
+            "prqty": qty.toString(),
+          }).then((response) {
+        print(response.body);
+        if (response.body == "failed") {
+          Fluttertoast.showToast(
+              msg: "Failed",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        } else {
+          Fluttertoast.showToast(
+              msg: "Success",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      });
+    }
     // print(widget.user.user_email);
     // print(widget.product.prid);
     // print(qty);
   }
 
-  // void _setday(String s) {
-  //   setState(() {
-  //     if (s == "add") {
-  //       day++;
-  //     }
-  //     if (s == "remove") {
-  //       if (day != 0) {
-  //         day--;
-  //       }
-  //     }
-  //     // total = day * double.parse(widget.product.prprice);
-  //     // print(double.parse(widget.product.prprice));
-  //   });
-  // }
-  // }
-
   _calTotalPrice() {
     setState(() {
-          total=double.parse(widget.product.prprice)*double.parse(_feetController.text);
-        });
+      total = double.parse(widget.product.prprice) *
+          double.parse(_feetController.text);
+    });
   }
 }
